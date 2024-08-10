@@ -57,7 +57,7 @@ std::vector<std::string> GetInputList(const std::string& Prompt){
 int main(){
 
     fs::path WorkingPath = fs::current_path();
-    fs::path ExecutablePath = GetExecutablePath();
+    fs::path ExecutablePath = GetExecutablePath().parent_path();
 
     std::string AddonName;
     cout << "Addon Name: ";
@@ -72,14 +72,13 @@ int main(){
     // Create necessary directories
     fs::create_directory(WorkingPath / AddonName);
     fs::create_directory(WorkingPath / AddonName / "lua");
-    fs::create_directory(WorkingPath / AddonName / "lua" / "autorun");
+    fs::copy(ExecutablePath / "Templates" / "autorun", WorkingPath / AddonName / "lua" / "autorun");
 
     if(!Weapons.empty()){
         fs::path WeaponsPath = WorkingPath / AddonName / "lua" / "weapons";
         fs::create_directory(WeaponsPath);
         for(std::string& Weapon : Weapons){
-            fs::create_directory(WeaponsPath / Weapon);
-            fs::copy(ExecutablePath / "Templates" / "Weapons", WeaponsPath / Weapon);
+            fs::copy(ExecutablePath / "Templates" / "weapons", WeaponsPath / Weapon);
         }
     }
 
@@ -87,10 +86,11 @@ int main(){
         fs::path EntitiesPath = WorkingPath / AddonName / "lua" / "entities";
         fs::create_directory(EntitiesPath);
         for(std::string& Entity : Entities){
-            fs::create_directory(EntitiesPath / Entity);
-            fs::copy(ExecutablePath / "Templates" / "Entities", EntitiesPath / Entity);
+            fs::copy(ExecutablePath / "Templates" / "entities", EntitiesPath / Entity);
         }
     }
+
+    std::cout << "Addon created successfully" << endl;
 
     return 0;
 }

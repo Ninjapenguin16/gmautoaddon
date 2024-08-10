@@ -3,8 +3,7 @@ include("shared.lua")
 
 -- Run once whenever entity is spawned
 function ENT:Initialize()
-    self:SetModel("models/hunter/plates/plate025x05.mdl")
-    self:SetMaterial("models/debug/debugwhite")
+    self:SetModel("CHANGE ME")
     self:PhysicsInit(SOLID_VPHYSICS)
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetSolid(SOLID_VPHYSICS)
